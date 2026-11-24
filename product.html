@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>goyu</title>
+<link rel="icon" href="assets/logo-small.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="product">
+<div id="site-top"></div>
+<main class="product">
+<div class="product__top">
+<section class="slider" aria-label="제품 이미지">
+<div class="slider__stage"><div class="slider__img" id="slide"></div></div>
+<button type="button" class="slider__btn slider__btn--prev" id="prev" aria-label="이전 이미지"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 5l-7 7 7 7"/></svg></button>
+<button type="button" class="slider__btn slider__btn--next" id="next" aria-label="다음 이미지"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 5l7 7-7 7"/></svg></button>
+<div class="slider__count" id="slide-count"></div>
+</section>
+<section class="info" aria-label="상품 정보">
+<h1 id="p-name"></h1>
+<div class="sub" id="p-color"></div>
+<div id="p-price"></div>
+<div class="accordion" id="accordion"></div>
+<div class="sizes" id="sizes" role="group" aria-label="사이즈"></div>
+<div class="selected" id="selected" hidden></div>
+<div class="total" id="total">TOTAL 0</div>
+<div class="actions">
+<button type="button" class="btn" id="add-bag">ADD TO BAG</button>
+<button type="button" class="btn btn--fill" id="buy-now">BUY IT NOW</button>
+</div>
+<button type="button" class="btn--npay" id="npay">네이버페이 구매하기</button>
+</section>
+</div>
+<section class="others" aria-label="다른 상품">
+<h2>OTHER ITEM</h2>
+<div class="others__grid" id="others"></div>
+</section>
+</main>
+<footer class="site-footer" id="site-footer"></footer>
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
