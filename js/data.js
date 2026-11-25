@@ -22,9 +22,9 @@ window.GOYU = {
   ],
 
   categories: [
-    { key: 'harness', label: 'Harness', name: '자가드 하네스' },
-    { key: 'collar', label: 'Collar', name: '자가드 목줄' },
-    { key: 'leash', label: 'Leash', name: '자가드 리쉬줄' }
+    { key: 'harness', label: 'Harness', name: '고유 하네스' },
+    { key: 'collar', label: 'Collar', name: '고유 마틴게일 목줄' },
+    { key: 'leash', label: 'Leash', name: '고유 리쉬 2.0' }
   ],
 
   colors: [
