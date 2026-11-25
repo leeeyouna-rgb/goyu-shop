@@ -121,3 +121,29 @@ img{display:block}
 /* 브랜드 슬로건 */
 .brand__slogan{margin:0;font-size:13px;letter-spacing:.04em;color:var(--muted)}
 @media (max-width:720px){.brand__story br{display:none}}
+
+/* 장바구니 숫자 배지 */
+.cart-badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--navy);color:#fff;font-size:11px;margin-left:2px;vertical-align:1px}
+.site-header a:hover .cart-badge{background:var(--navy-dark)}
+
+/* 갤러리 위 흐르는 메인 로고 */
+.gallery-wrap{position:relative}
+.gallery-slogan{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);overflow:hidden;pointer-events:none}
+.gallery-slogan__track{display:flex;align-items:center;gap:130px;width:max-content;animation:marquee-rev 70s linear infinite}
+.gallery-slogan__track img{display:block;height:32px;width:auto;opacity:.5}
+@keyframes marquee-rev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media (max-width:720px){.gallery-slogan__track img{height:24px}.gallery-slogan__track{gap:76px}}
+@media (prefers-reduced-motion:reduce){.gallery-slogan__track{animation:none}}
+
+/* 푸터 강아지 심볼 */
+.footer-symbol{margin-bottom:10px}
+
+/* 모바일 헤더: 카테고리 한 줄, 회원 메뉴 한 줄 */
+@media (max-width:720px){
+  .site-header{grid-template-columns:1fr;row-gap:10px}
+  .site-header nav,.site-header nav.member{justify-content:center;flex-wrap:nowrap;gap:16px;font-size:13px}
+}
+
+/* 카트 아이콘 */
+.cart-link{display:inline-flex;align-items:center;gap:3px;margin-top:-2px}
+.cart-link svg{display:block}

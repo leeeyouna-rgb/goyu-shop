@@ -4,7 +4,7 @@
  * image: 비워두면 회색 자리표시 박스가 나오고, 'assets/xxx.png' 처럼 넣으면 그 사진이 나옵니다.
  */
 window.GOYU = {
-  coupons: ['JOIN US 3,000WON COUPON', 'KAKAO CHANNEL 3,000WON COUPON'],
+  coupons: ['SIGN UP GOYU · 3,000 KRW COUPON', 'GOYU KAKAO CHANNEL · 3,000 KRW COUPON'],
 
   footer: {
     line1: 'goyu(고유) · [사업장 주소] · [이메일]',

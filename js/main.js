@@ -57,13 +57,16 @@
         '<a class="logo" href="index.html" aria-label="goyu 홈"><img src="assets/logo.png" alt="goyu"></a>' +
         '<nav class="member" aria-label="회원 메뉴">' +
           '<a href="#">Login</a>' +
-          '<a href="brand.html"' + (page === 'brand' ? ' class="is-active"' : '') + '>Brand</a>' +
-          '<a href="#">My page</a>' +
-          '<a href="#">Cart <span id="cart-count">' + getCart().length + '</span></a>' +
+          '<a href="brand.html"' + (page === 'brand' ? ' class="is-active"' : '') + '>Story</a>' +
+          '<a href="#">Mypage</a>' +
+          '<a href="#" class="cart-link" aria-label="장바구니">' +
+            '<svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 10.2a1.5 1.5 0 0 0 1.5 1.2h8.4a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>' +
+            '<span class="cart-badge" id="cart-count">' + getCart().length + '</span></a>' +
         '</nav>' +
       '</header>';
 
     document.getElementById('site-footer').innerHTML =
+      '<img class="footer-symbol" src="assets/favicon.png" alt="" width="36" height="36">' +
       '<div>' + esc(D.footer.line1) + '</div>' +
       '<div>' + esc(D.footer.line2) + '</div>' +
       '<div class="links"><a href="#">AGREEMENT</a><a href="#">PRIVACY POLICY</a><a href="#">GUIDE</a><a href="#">[사업자정보확인]</a></div>';
