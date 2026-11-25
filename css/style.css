@@ -12,7 +12,7 @@ html,body{margin:0}
 body{
   min-height:100vh;display:flex;flex-direction:column;
   background:var(--bg);color:var(--navy);
-  font-family:'Noto Sans KR',system-ui,sans-serif;
+  font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
 }
 a{color:var(--navy);text-decoration:none}
 a:hover{color:var(--navy-dark)}
