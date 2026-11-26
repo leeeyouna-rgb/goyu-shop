@@ -22,9 +22,9 @@ window.GOYU = {
   ],
 
   categories: [
-    { key: 'harness', label: 'Harness', name: '고유 하네스' },
-    { key: 'collar', label: 'Collar', name: '고유 마틴게일 목줄' },
-    { key: 'leash', label: 'Leash', name: '고유 리쉬 2.0' }
+    { key: 'harness', label: 'Harness', name: '고유 하네스', en: 'goyu harness' },
+    { key: 'collar', label: 'Collar', name: '고유 마틴게일 목줄', en: 'goyu martingale collar' },
+    { key: 'leash', label: 'Leash', name: '고유 리쉬 2.0', en: 'goyu leash 2.0' }
   ],
 
   colors: [
@@ -35,7 +35,7 @@ window.GOYU = {
 
   price: '[가격]', // 예: 39000 (숫자로 넣으면 자동으로 39,000원 표시)
 
-  sizes: ['XS', 'S', 'M', 'L'],
+  sizes: ['S', 'M'],
 
   details: [
     { title: 'PRODUCT INFO', body: '*goyu 로고를 짜 넣은 자가드 웨빙\n*[특징 2]\n*[특징 3]\n*[특징 4]' },

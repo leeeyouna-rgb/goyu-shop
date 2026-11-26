@@ -20,6 +20,7 @@
         id: cat.key + '-' + col.key,
         cat: cat.key,
         name: cat.name + ' (' + col.en + ')',
+        en: cat.en,
         color: col.ko,
         tint: col.tint,
         image: '' // 누끼컷 경로: 'assets/harness-a.png' 등
@@ -95,6 +96,7 @@
       return '<a class="card" href="product.html?id=' + p.id + '">' +
         '<div class="thumb">' + thumbInner(p, 'thumb__inner') + '</div>' +
         '<div class="card__name">' + esc(p.name) + '</div>' +
+        '<div class="card__en">' + esc(p.en) + '</div>' +
         '<div class="card__color">' + esc(p.color) + '</div>' +
         '<div class="card__price">' + fmtPrice(D.price) + '</div>' +
       '</a>';
@@ -104,51 +106,52 @@
   // ── 상품 상세 ──
   function renderProduct() {
     var p = findProduct(params.get('id'));
+    var cat = D.categories.filter(function (c) { return c.key === p.cat; })[0];
+    var col = D.colors.filter(function (c) { return p.id === p.cat + '-' + c.key; })[0];
     document.title = p.name + ' | goyu';
-    var slide = 0, size = null, open = D.details[0].title;
+    var slide = 0, size = null, qty = 1, tab = 0;
 
-    document.getElementById('p-name').textContent = p.name;
-    document.getElementById('p-color').textContent = p.color;
-    document.getElementById('p-price').textContent = fmtPrice(D.price);
+    var crumb = document.getElementById('crumb-cat');
+    crumb.textContent = cat.label; crumb.href = 'shop.html?cat=' + cat.key;
+    document.getElementById('pd-cat').textContent = cat.label;
+    document.getElementById('pd-name').textContent = cat.name;
+    document.getElementById('pd-en').textContent = cat.en;
+    document.getElementById('pd-price').textContent = fmtPrice(D.price);
+    document.getElementById('pd-color-name').textContent = col.en + ' · ' + col.ko;
 
-    function drawSlide() {
-      var s = D.slides[slide];
-      var el = document.getElementById('slide');
-      el.style.background = s.tint || p.tint;
-      el.innerHTML = s.image ? '<img src="' + esc(s.image) + '" alt="' + esc(s.label) + '" style="width:100%;height:100%;object-fit:contain">' : esc(s.label);
-      document.getElementById('slide-count').textContent = (slide + 1) + ' / ' + D.slides.length;
+    // 이미지: 화살표로 한 장씩
+    function drawGallery() {
+      var sl = D.slides[slide];
+      document.getElementById('pd-main').innerHTML = sl.image
+        ? '<img src="' + esc(sl.image) + '" alt="' + esc(sl.label) + '">'
+        : '<div class="pd-ph" style="background:' + (sl.tint || p.tint) + '">' + esc(sl.label) + '</div>';
+      document.getElementById('pd-count').textContent = (slide + 1) + ' / ' + D.slides.length;
     }
-    document.getElementById('prev').onclick = function () { slide = (slide + D.slides.length - 1) % D.slides.length; drawSlide(); };
-    document.getElementById('next').onclick = function () { slide = (slide + 1) % D.slides.length; drawSlide(); };
+    document.getElementById('prev').onclick = function () { slide = (slide + D.slides.length - 1) % D.slides.length; drawGallery(); };
+    document.getElementById('next').onclick = function () { slide = (slide + 1) % D.slides.length; drawGallery(); };
 
-    function drawAccordion() {
-      document.getElementById('accordion').innerHTML = D.details.map(function (d, i) {
-        var on = open === d.title;
-        return '<div class="acc-item"><button type="button" data-i="' + i + '" aria-expanded="' + on + '"><span>' + d.title + '</span><span aria-hidden="true">' + (on ? '−' : '+') + '</span></button>' +
-          (on ? '<div class="acc-body">' + esc(d.body) + '</div>' : '') + '</div>';
-      }).join('');
-    }
-    document.getElementById('accordion').onclick = function (e) {
-      var b = e.target.closest('button'); if (!b) return;
-      var t = D.details[+b.dataset.i].title;
-      open = open === t ? null : t; drawAccordion();
-    };
+    // 컬러: 같은 제품의 다른 컬러로 이동
+    document.getElementById('pd-swatches').innerHTML = D.colors.map(function (c) {
+      var on = c.key === col.key;
+      return '<a href="product.html?id=' + p.cat + '-' + c.key + '" class="pd-swatch' + (on ? ' is-on' : '') + '"' + (on ? ' aria-current="true"' : '') + ' aria-label="' + c.en + ' ' + esc(c.ko) + '"><span style="background:' + c.tint + '"></span></a>';
+    }).join('');
 
-    function drawSizes() {
-      document.getElementById('sizes').innerHTML = D.sizes.map(function (z) {
+    // 사이즈 · 수량 · 합계
+    function drawBuy() {
+      document.getElementById('pd-sizes').innerHTML = D.sizes.map(function (z) {
         return '<button type="button" data-z="' + z + '" aria-pressed="' + (size === z) + '">' + z + '</button>';
       }).join('');
-      var sel = document.getElementById('selected');
-      if (size) {
-        sel.hidden = false;
-        sel.innerHTML = '<span>' + esc(p.name) + ' / ' + size + '</span><span>1 · ' + fmtPrice(D.price) + '</span>';
-      } else sel.hidden = true;
-      document.getElementById('total').textContent = 'TOTAL ' + (size ? fmtPrice(D.price) + ' (1개)' : '0');
+      document.getElementById('qty').textContent = qty;
+      document.getElementById('qty-minus').disabled = qty <= 1;
+      var total = typeof D.price === 'number' ? fmtPrice(D.price * qty) : fmtPrice(D.price) + ' × ' + qty;
+      document.getElementById('pd-total').textContent = size ? total : '사이즈를 선택해 주세요';
     }
-    document.getElementById('sizes').onclick = function (e) {
+    document.getElementById('pd-sizes').onclick = function (e) {
       var b = e.target.closest('button'); if (!b) return;
-      size = size === b.dataset.z ? null : b.dataset.z; drawSizes();
+      size = size === b.dataset.z ? null : b.dataset.z; drawBuy();
     };
+    document.getElementById('qty-minus').onclick = function () { if (qty > 1) { qty--; drawBuy(); } };
+    document.getElementById('qty-plus').onclick = function () { qty++; drawBuy(); };
 
     function needSize() {
       if (!size) { toast('사이즈를 선택해 주세요.'); return true; }
@@ -156,24 +159,49 @@
     }
     document.getElementById('add-bag').onclick = function () {
       if (needSize()) return;
-      var c = getCart(); c.push({ id: p.id, size: size }); setCart(c);
-      toast('장바구니에 담았습니다.');
+      var c = getCart();
+      for (var i = 0; i < qty; i++) c.push({ id: p.id, size: size });
+      setCart(c);
+      toast('장바구니에 담았어요.');
     };
-    document.getElementById('buy-now').onclick = function () {
-      if (needSize()) return;
-      toast('결제 기능은 준비 중입니다.');
-    };
-    document.getElementById('npay').onclick = function () { toast('네이버페이는 준비 중입니다.'); };
+    document.getElementById('buy-now').onclick = function () { if (!needSize()) toast('결제 기능은 준비 중이에요.'); };
+    document.getElementById('npay').onclick = function () { toast('네이버페이는 준비 중이에요.'); };
 
-    var others = products.filter(function (o) { return o.id !== p.id; })
-      .sort(function (a, b) { return (b.cat === p.cat) - (a.cat === p.cat); }).slice(0, 4);
-    document.getElementById('others').innerHTML = others.map(function (o) {
-      return '<a href="product.html?id=' + o.id + '"><div class="thumb">' +
-        (o.image ? '<img class="thumb__inner" src="' + esc(o.image) + '" alt="">' : '<div class="thumb__inner" style="background:' + o.tint + '"></div>') +
-        '</div><span>' + esc(o.name) + '</span><span>' + fmtPrice(D.price) + '</span></a>';
+    // 상세 탭
+    var tabs = [
+      { title: '상세 정보', body: D.details[0].body },
+      { title: '사이즈', body: '[사이즈표 — S · M 별 가슴둘레·목둘레 범위]\n\n' + D.details[2].body.split('\n')[0] },
+      { title: '소재·관리', body: D.details[1].body + '\n' + D.details[2].body.split('\n').slice(1).join('\n') },
+      { title: '배송·교환', body: D.details[3].body }
+    ];
+    function drawTabs() {
+      document.getElementById('pd-tabs').innerHTML = tabs.map(function (t, i) {
+        return '<button type="button" role="tab" id="pd-tab-' + i + '" data-i="' + i + '" aria-selected="' + (i === tab) + '"' + (i === 1 ? ' data-size' : '') + '>' + t.title + '</button>';
+      }).join('');
+      var panel = document.getElementById('pd-panel');
+      panel.setAttribute('aria-labelledby', 'pd-tab-' + tab);
+      panel.textContent = tabs[tab].body.replace(/^\*/gm, '· ');
+    }
+    document.getElementById('pd-tabs').onclick = function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      tab = +b.dataset.i; drawTabs();
+    };
+    document.querySelector('a[href="#pd-size"]').onclick = function (e) {
+      e.preventDefault(); tab = 1; drawTabs();
+      document.getElementById('pd-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    // 세트 상품: 같은 컬러의 나머지 두 제품
+    var setOrder = { harness: ['collar', 'leash'], collar: ['harness', 'leash'], leash: ['collar', 'harness'] }[p.cat];
+    document.getElementById('pd-set').innerHTML = setOrder.map(function (k) {
+      var o = findProduct(k + '-' + col.key);
+      var oc = D.categories.filter(function (c) { return c.key === k; })[0];
+      return '<a class="pd-set__item" href="product.html?id=' + o.id + '">' +
+        '<div class="pd-set__img">' + (o.image ? '<img src="' + esc(o.image) + '" alt="">' : '<div style="background:' + o.tint + '"></div>') + '</div>' +
+        '<div class="pd-set__text"><strong>' + esc(oc.name) + '</strong><span class="pd-set__en">' + esc(oc.en) + '</span><span>' + col.en + '</span><span>' + fmtPrice(D.price) + '</span></div></a>';
     }).join('');
 
-    drawSlide(); drawAccordion(); drawSizes();
+    drawGallery(); drawBuy(); drawTabs();
   }
 
   var toastTimer;
