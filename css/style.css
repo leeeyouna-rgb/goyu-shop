@@ -507,3 +507,6 @@ img{display:block}
 @media (max-width:860px){
   .pd-sizepop{top:100%;left:0;width:100%;max-width:340px;margin-top:8px}
 }
+
+/* MODEL INFO: 스티커 이미지가 잘리지 않게 */
+.pd-model img{object-fit:contain;padding:8%;box-sizing:border-box}

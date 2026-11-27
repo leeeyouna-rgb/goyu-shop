@@ -62,10 +62,10 @@ window.GOYU = {
 
   // 상세 정보 > MODEL INFO (사진 경로와 ? 를 실제 값으로 바꿔 주세요)
   models: [
-    { image: '', name: 'KAN', color: '?', size: '?', neck: '?', chest: '?', back: '?', weight: '?' },
-    { image: '', name: 'MICCU', color: '?', size: '?', neck: '?', chest: '?', back: '?', weight: '?' },
-    { image: '', name: 'KOI', color: '?', size: '?', neck: '?', chest: '?', back: '?', weight: '?' },
-    { image: '', name: 'ONGSIM', color: '?', size: '?', neck: '?', chest: '?', back: '?', weight: '?' }
+    { image: 'assets/model-kan.png', name: 'KAN', color: '?', size: '?', neck: '?', chest: '?', back: '?', weight: '?' },
+    { image: 'assets/model-miccu.png', name: 'MICCU', color: '?', size: '?', neck: '?', chest: '?', back: '?', weight: '?' },
+    { image: 'assets/model-koi.png', name: 'KOI', color: '?', size: '?', neck: '?', chest: '?', back: '?', weight: '?' },
+    { image: 'assets/model-ongsim.png', name: 'ONGSIM', color: '?', size: '?', neck: '?', chest: '?', back: '?', weight: '?' }
   ],
 
   details: [
